@@ -1,3 +1,6 @@
+<%@page import="_DAO.BookDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="_DTO.Member"%>
 <%@page import="_DAO.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,6 +15,14 @@
 		MemberDAO mDao = MemberDAO.getInstance();
 		m = mDao.getMemberInfo(uno);
 	}
+	
+	List<String> genreArr = new ArrayList<String>();
+	BookDAO bDao = BookDAO.getInstance();
+	genreArr = bDao.bookSelectGenre();
+	for(int i=0; i< genreArr.size(); i++) {
+		System.out.println(genreArr.get(0));
+	}
+	request.setAttribute("genreArr", genreArr);
 %>
 <!DOCTYPE html>
 <html>
@@ -115,6 +126,9 @@ img {
 		<div class="s_genre_price">
 			<select name="genre">
 				<option value='' selected>---장르---</option>
+				<c:forEach items="${genreArr }" var="genre">
+					<option value="${genreArr[genre]}">${genreArr[genre] }</option> 
+				</c:forEach>
 			</select> <input type="text" name="start_price">원 ~ <input type="text"
 				name="end_price">원
 		</div>

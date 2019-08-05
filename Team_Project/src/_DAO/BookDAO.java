@@ -163,6 +163,33 @@ public class BookDAO {
 		return blist;
 	}
 	
+	public List<String> bookSelectGenre(){
+		List<String> genreArr = new ArrayList<String>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "select distinct genre from book";
+
+		try {
+			conn = DBConn.getConnect();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String genre = rs.getString(1);
+				genreArr.add(genre);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConn.close(rs);
+			DBConn.close(ps);
+			DBConn.close(conn);
+		}
+		
+		return genreArr;
+	}
+
 	public int getTotalBook() {
 		Connection conn = null;
 		PreparedStatement ps = null;
